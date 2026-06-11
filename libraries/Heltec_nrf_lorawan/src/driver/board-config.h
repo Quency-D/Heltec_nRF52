@@ -84,6 +84,19 @@
 #define LORA_MISO      33
 #define LORA_MOSI      11
 
+#elif defined(HELTEC_MESH_TOWER_V2)
+
+#define RADIO_DIO_1    20
+#define RADIO_NSS      24
+#define RADIO_RESET    25
+#define RADIO_BUSY     17
+
+#define LORA_CLK       19
+#define LORA_MISO      23
+#define LORA_MOSI      22
+
+
+
 #elif defined(RADIOCORE_52840)
 
 #define RADIO_DIO_1    11

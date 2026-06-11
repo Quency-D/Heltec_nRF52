@@ -11,6 +11,9 @@ _Avoid_: T114 when the exact board family matters.
 **Mesh Pocket V2**:
 The Heltec nRF52 board variant shown as `Mesh Pocket V2` in the board menu and implemented by the `HT-mesh-pocket-v2` variant. It has SX1262 LoRa, UC6580 GNSS wired to `Serial1`, and an NV3001B TFT.
 
+**Mesh Tower V2**:
+The Heltec nRF52840 tower board variant shown as `Mesh Tower V2` in the board menu and implemented by the `HT-mesh-tower-v2` variant. It has SX1262 LoRa with an external PA/FEM, L76K GNSS wired to `Serial1`, battery sensing, USB PD controller I2C, and no onboard TFT or RGB.
+
 **RadioCore-52840**:
 The RC52-L62-derived nRF52840 board variant shown as `RadioCore-52840` in the board menu. It has SX1262 LoRa, battery sense, a header UART, and an optional TFT connector, but no onboard GNSS.
 
@@ -21,6 +24,7 @@ A production validation sketch that reports hardware test results for fixture lo
 
 - A **Mesh Node T114** can run LoRa and GPS examples that are written against the shared nRF52 board abstraction.
 - A **Mesh Pocket V2** GPS TFT example requires Arduino_GFX for the NV3001B display.
+- **Mesh Tower V2** exposes GPS and battery support through the shared nRF52 board abstraction, but it is not a screen board.
 - **RadioCore-52840** provides pin-level TFT connector support only; display examples need an external display library selected by the sketch.
 
 ## Example Dialogue

@@ -47,7 +47,7 @@ void OnTxTimeout( void );
 #if LORA_POWER_TEST_ST7789
 Adafruit_ST7789 tft = Adafruit_ST7789(&SPI1,PIN_TFT_CS, PIN_TFT_DC, PIN_TFT_RST);
 #define LORA_POWER_TEST_BLACK ST77XX_BLACK
-#else
+#elif defined(LORA_POWER_TEST_ST7735)
 Adafruit_ST7735 tft = Adafruit_ST7735(&SPI1,PIN_TFT_CS, PIN_TFT_DC, PIN_TFT_RST);
 #define LORA_POWER_TEST_BLACK ST7735_BLACK
 #endif
@@ -58,17 +58,23 @@ String powerStr,freqStr;
 
 void displayStatus(void)
 {
-    tft.fillScreen(LORA_POWER_TEST_BLACK);
     powerStr = "power: "+String(power,DEC)+" dBm";
     freqStr = "freq: "+String(RF_FREQUENCY/1000000,DEC)+" MHz";
+#if LORA_POWER_TEST_ST7789 || defined(LORA_POWER_TEST_ST7735)
+    tft.fillScreen(LORA_POWER_TEST_BLACK);
     tft.setCursor(0, 0);
     tft.print(powerStr);
     tft.setCursor(0, 30);
     tft.print(freqStr);
+#else
+    Serial.println(powerStr);
+    Serial.println(freqStr);
+#endif
 }
 
 void displayInit(void)
 {
+#if LORA_POWER_TEST_ST7789 || defined(LORA_POWER_TEST_ST7735)
   pinMode(PIN_TFT_VDD_CTL,OUTPUT);
   pinMode(PIN_TFT_LEDA_CTL,OUTPUT);
   digitalWrite(PIN_TFT_VDD_CTL,TFT_VDD_ENABLE);
@@ -88,6 +94,7 @@ void displayInit(void)
   tft.setSPISpeed(40000000);
   tft.fillScreen(LORA_POWER_TEST_BLACK);
   tft.setTextWrap(false);
+#endif
 }
 
 void interrupt_GPIO0(void)
@@ -154,7 +161,7 @@ void loop()
     interrupt_handle();
     delay(1000);
 		txNumber += 0.01;
-		sprintf(txpacket,"Hello world number %0.2f",txNumber);  //start a package
+		sprintf(txpacket," power:%d freq:%d MHz number %0.2f",power, RF_FREQUENCY, txNumber);  //start a package
    
 		Serial.printf("\r\nsending packet \"%s\" , length %d\r\n",txpacket, strlen(txpacket));
 

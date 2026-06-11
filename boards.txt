@@ -447,6 +447,64 @@ HT-mesh-pocket-v2.build.defines=-DLoraWan_RGB={build.rgb_enable} -DLORA_DEBUG_SE
 HT-mesh-pocket-v2.build.debug_flags=-DCFG_DEBUG=0
 
 # -----------------------------------
+#HT-mesh-tower-v2
+# -----------------------------------
+HT-mesh-tower-v2.name=Mesh Tower V2
+
+# VID/PID for Bootloader, Arduino & CircuitPython
+HT-mesh-tower-v2.vid.0=0x239A
+HT-mesh-tower-v2.pid.0=0x8071
+HT-mesh-tower-v2.vid.1=0x239A
+HT-mesh-tower-v2.pid.1=0x0071
+HT-mesh-tower-v2.vid.2=0x239A
+HT-mesh-tower-v2.pid.2=0x8072
+
+# Upload
+HT-mesh-tower-v2.bootloader.tool=bootburn
+HT-mesh-tower-v2.upload.tool=nrfutil
+HT-mesh-tower-v2.upload.protocol=nrfutil
+HT-mesh-tower-v2.upload.use_1200bps_touch=true
+HT-mesh-tower-v2.upload.wait_for_upload_port=true
+HT-mesh-tower-v2.upload.maximum_size=815104
+HT-mesh-tower-v2.upload.maximum_data_size=237568
+
+# Build
+HT-mesh-tower-v2.build.mcu=cortex-m4
+HT-mesh-tower-v2.build.f_cpu=64000000
+HT-mesh-tower-v2.build.board=HT_MESH_TOWER_V2
+HT-mesh-tower-v2.build.core=nRF5
+HT-mesh-tower-v2.build.variant=HT-mesh-tower-v2
+HT-mesh-tower-v2.build.usb_manufacturer="Heltec"
+HT-mesh-tower-v2.build.usb_product="Mesh Tower V2"
+HT-mesh-tower-v2.build.extra_flags=-DNRF52840_XXAA {build.flags.usb}
+HT-mesh-tower-v2.build.ldscript=nrf52840_s140_v6.ld
+HT-mesh-tower-v2.build.openocdscript=scripts/openocd/daplink_nrf52.cfg
+HT-mesh-tower-v2.build.vid=0x239A
+HT-mesh-tower-v2.build.pid=0x8071
+
+# Menu: SoftDevice
+HT-mesh-tower-v2.menu.softdevice.s140v6=S140 6.1.1
+HT-mesh-tower-v2.menu.softdevice.s140v6.build.sd_name=s140
+HT-mesh-tower-v2.menu.softdevice.s140v6.build.sd_version=6.1.1
+HT-mesh-tower-v2.menu.softdevice.s140v6.build.sd_fwid=0x00B6
+
+HT-mesh-tower-v2.menu.RGB.disable=Disable
+HT-mesh-tower-v2.menu.RGB.disable.build.rgb_enable=0
+
+HT-mesh-tower-v2.menu.LoRa_debug.enable=Enable
+HT-mesh-tower-v2.menu.LoRa_debug.enable.build.LoRa_debug=1
+HT-mesh-tower-v2.menu.LoRa_debug.disable=Disable
+HT-mesh-tower-v2.menu.LoRa_debug.disable.build.LoRa_debug=0
+
+HT-mesh-tower-v2.menu.lora_debug_port.serial=Serial(USB CDC)
+HT-mesh-tower-v2.menu.lora_debug_port.serial.build.lora_debug=0
+HT-mesh-tower-v2.menu.lora_debug_port.serial1=Serial1(UART0)
+HT-mesh-tower-v2.menu.lora_debug_port.serial1.build.lora_debug=1
+
+HT-mesh-tower-v2.build.defines=-DLoraWan_RGB={build.rgb_enable} -DLORA_DEBUG_SERIAL_NUM={build.lora_debug} -DLORA_DEBUG_ENABLE={build.LoRa_debug} -DHELTEC_MESH_TOWER_V2
+HT-mesh-tower-v2.build.debug_flags=-DCFG_DEBUG=0
+
+# -----------------------------------
 #radiocore_52840
 # -----------------------------------
 radiocore_52840.name=RadioCore-52840
