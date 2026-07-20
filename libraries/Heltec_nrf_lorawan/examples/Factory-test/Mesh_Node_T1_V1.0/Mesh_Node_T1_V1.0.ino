@@ -103,6 +103,9 @@ SFE_MMC5983MA mag;
 #define LED_BUZZER_CONFIRM_TIMEOUT_MS 15000UL
 #define BLE_Rssi_MIN  -70
 #define BLE_Rssi_MAX  -30
+#define LORA_RSSI_MIN -50
+#define LORA_RSSI_MAX -10
+#define LORA_RSSI_DIFF_MAX 15
 #define BATTER_MIN 3700
 #define BATTER_MAX 4200
 
@@ -996,6 +999,16 @@ void OnTxTimeout( void )
 
 
 extern int8_t blerssi;
+static bool isLoraRssiPass()
+{
+  int txRssi = abs(maxTxRssi);
+  int rxRssi = abs(maxRxRssi);
+  bool txInRange = maxTxRssi >= LORA_RSSI_MIN && maxTxRssi <= LORA_RSSI_MAX;
+  bool rxInRange = maxRxRssi >= LORA_RSSI_MIN && maxRxRssi <= LORA_RSSI_MAX;
+
+  return txInRange && rxInRange && abs(txRssi - rxRssi) <= LORA_RSSI_DIFF_MAX;
+}
+
 static void drawFinalStatusPage(int value, bool sensorResult,
                                 uint32_t elapsedSeconds) {
   st7735.fillScreen(ST7735_BLACK);
@@ -1016,10 +1029,7 @@ static void drawFinalStatusPage(int value, bool sensorResult,
   st7735.println(packet);
 
   if (value) {
-    int txRssi = abs(maxTxRssi);
-    int rxRssi = abs(maxRxRssi);
-    bool loraPass = abs(txRssi - rxRssi) <= 15;
-    st7735.setTextColor(loraPass ? ST7735_GREEN : ST7735_RED);
+    st7735.setTextColor(isLoraRssiPass() ? ST7735_GREEN : ST7735_RED);
     packet = "Lora Rssi:" + String(maxTxRssi) + " " + String(maxRxRssi);
     st7735.setCursor(0, 28);
     st7735.println(packet);
@@ -1044,7 +1054,6 @@ static void drawFinalStatusPage(int value, bool sensorResult,
 
 void showStatus(int value)
 {
-  int n = 0,m = 0,c = 0;
   if(intosleep)
     return;
   st7735.fillScreen(ST7735_BLACK);
@@ -1071,15 +1080,15 @@ void showStatus(int value)
   }
   if(value)
   {
-    n = abs(maxTxRssi);
-    m = abs(maxRxRssi);
-    c = abs(n - m);
-    if(c > 15)
+    if(isLoraRssiPass())
+    {
+      debug_printf("Lora Rssi: %d %d OK\r\n",maxTxRssi,maxRxRssi);
+    }
+    else
     {
       debug_printf("Lora Rssi: %d %d XX\r\n",maxTxRssi,maxRxRssi);
       error_count = 2;
     }
-    debug_printf("Lora Rssi: %d %d OK\r\n",maxTxRssi,maxRxRssi);
     debug_printf("BLE Rssi: %d\r\n",blerssi);
     if(blerssi > BLE_Rssi_MAX || blerssi < BLE_Rssi_MIN)
     {
