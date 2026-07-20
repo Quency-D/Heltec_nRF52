@@ -76,13 +76,13 @@
 #elif defined(HELTEC_MESH_POCKET_V2)
 
 #define RADIO_DIO_1    31
-#define RADIO_NSS      32
-#define RADIO_RESET    39
+#define RADIO_NSS      14
+#define RADIO_RESET    11
 #define RADIO_BUSY     29
 
-#define LORA_CLK       25
-#define LORA_MISO      33
-#define LORA_MOSI      11
+#define LORA_CLK       45
+#define LORA_MISO      2
+#define LORA_MOSI      47
 
 #elif defined(HELTEC_MESH_TOWER_V2)
 
@@ -97,16 +97,16 @@
 
 
 
-#elif defined(RADIOCORE_52840)
+#elif defined(HELTEC_RC52)
 
 #define RADIO_DIO_1    11
-#define RADIO_NSS      32
-#define RADIO_RESET    23
-#define RADIO_BUSY     33
+#define RADIO_NSS      13
+#define RADIO_RESET    32
+#define RADIO_BUSY     24
 
 #define LORA_CLK       25
 #define LORA_MISO      14
-#define LORA_MOSI      24
+#define LORA_MOSI      22
 
 #else
 #define RADIO_DIO_1    20

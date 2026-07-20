@@ -16,8 +16,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef _VARIANT_RADIOCORE_52840_
-#define _VARIANT_RADIOCORE_52840_
+#ifndef _VARIANT_HELTEC_RC52_
+#define _VARIANT_HELTEC_RC52_
 
 /** Master clock frequency */
 #define VARIANT_MCK (64000000ul)
@@ -109,11 +109,11 @@ static const uint8_t A0 = PIN_A0;
  * LoRa radio
  */
 #define USE_SX1262
-#define SX126X_CS    (32 + 0)
+#define SX126X_CS    (0 + 13)
 #define LORA_CS      SX126X_CS
 #define SX126X_DIO1  (0 + 11)
-#define SX126X_BUSY  (32 + 1)
-#define SX126X_RESET (0 + 23)
+#define SX126X_BUSY  (0 + 24)
+#define SX126X_RESET (32 + 0)
 #define SX126X_RXEN  (32 + 7) // HT-RA62A LNA_Ctrl
 #define SX126X_DIO2_AS_RF_SWITCH
 #define SX126X_DIO3_TCXO_VOLTAGE 1.8
@@ -131,7 +131,7 @@ static const uint8_t A0 = PIN_A0;
 
 // SPI for LoRa
 #define PIN_SPI_MISO (0 + 14)
-#define PIN_SPI_MOSI (0 + 24)
+#define PIN_SPI_MOSI (0 + 22)
 #define PIN_SPI_SCK  (0 + 25)
 
 static const uint8_t SS   = SX126X_CS;
